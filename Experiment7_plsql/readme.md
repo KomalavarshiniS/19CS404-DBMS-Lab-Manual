@@ -33,9 +33,26 @@ END;
 - Declare two numeric variables and initialize them.
 - Use an `IF` statement to compare the values.
 - Display the greater number using `DBMS_OUTPUT.PUT_LINE`.
-
+### Progarm:
+```
+DECLARE
+   num1 NUMBER := 80;
+   num2 NUMBER := 52;
+BEGIN
+   IF num1 > num2 THEN
+      DBMS_OUTPUT.PUT_LINE('The greatest number is: ' || num1);
+   ELSIF num2 > num1 THEN
+      DBMS_OUTPUT.PUT_LINE('The greatest number is: ' || num2);
+   ELSE
+      DBMS_OUTPUT.PUT_LINE('Both numbers are equal.');
+   END IF;
+END;
+```
 **Expected Output:**  
 Greater number is: 80
+
+<img width="903" height="177" alt="image" src="https://github.com/user-attachments/assets/cd615c5b-0397-49f9-b439-f8cf5bc5c883" />
+
 
 ---
 
