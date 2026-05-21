@@ -104,124 +104,311 @@ CREATE TABLE Table_Name (
 ```
 
 **Question 1**
---
--- Paste Question 1 here
+```
+Create a table named Tasks with the following columns:
 
-```sql
--- Paste your SQL code below for Question 1
+TaskID as INTEGER
+TaskName as TEXT
+DueDate as DATE
+For example:
+
+Test	Result
+pragma table_info('Tasks');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           TaskID      INTEGER     0                       0
+1           TaskName    TEXT        0                       0
+2           DueDate     DATE        0                       0
 ```
 
+```
+CREATE TABLE tasks(
+   TaskID  INTEGER,
+   TaskName  TEXT,
+   DueDate DATE
+);
+```
 **Output:**
 
-![Output1](output.png)
+<img width="1321" height="268" alt="image" src="https://github.com/user-attachments/assets/6cbd707c-7229-4689-9442-d32445994d03" />
 
 **Question 2**
----
--- Paste Question 2 here
+```
+Insert all books from Out_of_print_books into Books
 
-```sql
--- Paste your SQL code below for Question 2
+Table attributes are ISBN, Title, Author, Publisher, YearPublished
+
+For example:
+
+Test	Result
+select * from Books;
+ISBN            Title           Author              Publisher      YearPublished
+--------------  --------------  ------------------  -------------  -------------
+978-1234567890  The Lost World  Arthur Conan Doyle  Vintage Books  1912
+978-0987654321  Gone with the   Margaret Mitchell   Macmillan      1936
+978-1122334455  Moby Dick       Herman Melville     Harper & Brot  1851
 ```
 
+```
+INSERT INTO Books
+SELECT * FROM Out_of_print_books;
+```
 **Output:**
 
-![Output2](output.png)
+<img width="1327" height="214" alt="image" src="https://github.com/user-attachments/assets/1e2c33cf-1935-4291-8301-3cd11c2561c8" />
 
 **Question 3**
----
--- Paste Question 3 here
+```
+Write a SQL query to Add a new column named "discount" with the data type DECIMAL(5,2) to the "customer" table.
 
-```sql
--- Paste your SQL code below for Question 3
+Sample table: customer
+
+ customer_id |   cust_name    |    city    | grade | salesman_id 
+-------------+----------------+------------+-------+-------------
+        3002 | Nick Rimando   | New York   |   100 |        5001
+        3007 | Brad Davis     | New York   |   200 |        5001
+        3005 | Graham Zusi    | California |   200 |        5002
+ 
+
+For example:
+
+Test	Result
+pragma table_info('customer');
+cid         name         type                               notnull     dflt_value  pk
+----------  -----------  ---------------------------------  ----------  ----------  ----------
+0           customer_id  integer primarykey auto increment  0                       0
+1           cust_name    varchar2(30)                       0                       0
+2           city         varchar(30)                        0                       0
+3           grade        number                             0                       0
+4           salesman_id  number                             0                       0
+5           discount     DECIMAL(5,2)                       0                       0
 ```
 
+```
+ALTER TABLE customer
+ADD discount DECIMAL(5,2);
+```
 **Output:**
 
-![Output3](output.png)
+<img width="1323" height="273" alt="image" src="https://github.com/user-attachments/assets/7e334240-845b-4df1-a8c4-4ec100bc674b" />
+
 
 **Question 4**
----
--- Paste Question 4 here
+```
+Create a table named Employees with the following columns:
 
-```sql
--- Paste your SQL code below for Question 4
+EmployeeID as INTEGER
+FirstName as TEXT
+LastName as TEXT
+HireDate as DATE
+For example:
+
+Test	Result
+pragma table_info('Employees');
+cid   name        type        notnull     dflt_value  pk
+----  ----------  ----------  ----------  ----------  ----------
+0     EmployeeID  INTEGER     0                       0
+1     FirstName   TEXT        0                       0
+2     LastName    TEXT        0                       0
+3     HireDate    DATE        0                       0
+```
+
+```
+CREATE TABLE employees(
+    EmployeeID INTEGER,
+    FirstName TEXT,
+    LastName TEXT,
+    HireDate DATE
+);
 ```
 
 **Output:**
 
-![Output4](output.png)
+<img width="1322" height="221" alt="image" src="https://github.com/user-attachments/assets/04625a84-6491-42b8-811e-0649d2fabb60" />
+
 
 **Question 5**
----
--- Paste Question 5 here
+```
+Create a table named Invoices with the following constraints:
+InvoiceID as INTEGER should be the primary key.
+InvoiceDate as DATE.
+Amount as REAL should be greater than 0.
+DueDate as DATE should be greater than the InvoiceDate.
+OrderID as INTEGER should be a foreign key referencing Orders(OrderID).
+For example:
 
-```sql
--- Paste your SQL code below for Question 5
+Test	Result
+INSERT INTO Orders (OrderID, OrderDate, CustomerID) VALUES (1, '2024-08-01', 1);
+INSERT INTO Invoices (InvoiceID, InvoiceDate, Amount, DueDate, OrderID) VALUES (1, '2024-08-01', 100.0, '2024-09-01', 1);
+SELECT * FROM Invoices;
+InvoiceID   InvoiceDate  Amount      DueDate     OrderID
+----------  -----------  ----------  ----------  ----------
+1           2024-08-01   100.0       2024-09-01  1
+```
+
+```
+CREATE TABLE Invoices(
+     InvoiceID INTEGER PRIMARY KEY,
+     InvoiceDate DATE,
+     Amount Real check(Amount > 0),
+     DueDate DATE check(DueDate > InvoiceDate),
+     OrderID INTEGER,
+     foreign key(OrderId) references Orders(OrderID)
+);
 ```
 
 **Output:**
 
-![Output5](output.png)
+<img width="1323" height="228" alt="image" src="https://github.com/user-attachments/assets/1525697c-7188-43b1-ad55-c1fbed130bed" />
+
 
 **Question 6**
----
--- Paste Question 6 here
+```
+Create a table named Locations with the following columns:
 
-```sql
--- Paste your SQL code below for Question 6
+LocationID as INTEGER
+LocationName as TEXT
+Address as TEXT
+For example:
+
+Test	Result
+pragma table_info('Locations');
+cid       name             type        notnull     dflt_value  pk
+--------  ---------------  ----------  ----------  ----------  ----------
+0         LocationID       INTEGER     0                       0
+1         LocationName     TEXT        0                       0
+2         Address          TEXT        0                       0
 ```
 
-**Output:**
+```
+create table Locations(
+    LocationID INTEGER,
+    LocationName TEXT,
+    Address TEXT
+);
+```
 
-![Output6](output.png)
+
+**Output:**
+<img width="1326" height="284" alt="image" src="https://github.com/user-attachments/assets/aa1232fa-60d8-499e-a7b5-6d1c2db9eea6" />
+
 
 **Question 7**
----
--- Paste Question 7 here
+```
+Insert the below data into the Student_details table, allowing the Subject and MARKS columns to take their default values.
 
-```sql
--- Paste your SQL code below for Question 7
+RollNo      Name          Gender      
+----------  ------------  ----------  
+204         Samuel Black  M          
+
+Note: The Subject and MARKS columns will use their default values.
+ 
+For example:
+
+Test	Result
+SELECT RollNo, Name, Gender 
+FROM Student_details 
+WHERE RollNo = 204;
+
+
+RollNo      Name          Gender
+----------  ------------  ----------
+204         Samuel Black  M
+```
+
+```
+INSERT INTO Student_details(RollNo,Name,Gender)
+Values(204,'Samuel Black','M');
 ```
 
 **Output:**
+<img width="1329" height="231" alt="image" src="https://github.com/user-attachments/assets/ce7ca771-901f-4f92-b1df-f8ad418c6715" />
 
-![Output7](output.png)
 
 **Question 8**
----
--- Paste Question 8 here
+```
+Write a SQL query to add a new column MobileNumber of type NUMBER and a new column Address of type VARCHAR(100) to the Student_details table.
 
-```sql
--- Paste your SQL code below for Question 8
+For example:
+
+Test	Result
+pragma table_info('Student_details');
+cid    name             type             notnu  dflt_value  pk
+-----  ---------------  ---------------  -----  ----------  ----------
+0      RollNo           int              0                  1
+1      Name             VARCHAR(100)     1                  0
+2      Gender           TEXT             1                  0
+3      Subject          VARCHAR(30)      0                  0
+4      MARKS            INT (3)          0                  0
+5      MobileNumber     NUMBER           0                  0
+6      Address          VARCHAR(100)     0                  0
+```
+
+```
+ALTER TABLE Student_details
+ADD MobileNumber NUMBER;
+ALTER TABLE Student_details
+ADD Address VARCHAR(100);
 ```
 
 **Output:**
+<img width="1327" height="273" alt="image" src="https://github.com/user-attachments/assets/d8b42332-f2b3-44d1-8972-ef1bf2f800ae" />
 
-![Output8](output.png)
 
 **Question 9**
----
--- Paste Question 9 here
 
-```sql
--- Paste your SQL code below for Question 9
+```
+Insert a product with ProductID 104, Name Tablet, and Category Electronics into the Products table, where Price and Stock should use default values.
+
+For example:
+
+Test	Result
+SELECT ProductID, Name, Category, Price, Stock 
+FROM Products 
+WHERE ProductID = 104;
+ProductID   Name        Category     Price       Stock
+----------  ----------  -----------  ----------  ----------
+104         Tablet      Electronics  100         50
 ```
 
+```
+INSERT INTO Products(ProductID,Name,Category,Price,Stock)
+Values('104','Tablet','Electronics','100','50');
+```
 **Output:**
+<img width="1323" height="171" alt="image" src="https://github.com/user-attachments/assets/ca6e166b-82bb-46ee-b6bf-837b9b734990" />
 
-![Output9](output.png)
 
 **Question 10**
----
--- Paste Question 10 here
 
-```sql
--- Paste your SQL code below for Question 10
+```
+Create a table named Events with the following columns:
+
+EventID as INTEGER
+EventName as TEXT
+EventDate as DATE
+For example:
+
+Test	Result
+pragma table_info('Events');
+cid         name        type        notnull     dflt_value  pk
+----------  ----------  ----------  ----------  ----------  ----------
+0           EventID     INTEGER     0                       0
+1           EventName   TEXT        0                       0
+2           EventDate   DATE        0                       0
 ```
 
+```
+CREATE TABLE Events(
+    EventID  INTEGER,
+    EventName  TEXT,
+    EventDate  DATE
+);
+```
 **Output:**
 
-![Output10](output.png)
+<img width="1329" height="269" alt="image" src="https://github.com/user-attachments/assets/f073bd20-d305-48aa-8ed5-2c3b64cfdb29" />
+
 
 
 ## RESULT
