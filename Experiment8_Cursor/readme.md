@@ -438,10 +438,82 @@ The program should display employee records or the appropriate error message if 
 - Use a cursor with the `FOR UPDATE` clause to lock the rows of employees in a specific department and update their salary.
 - Implement exception handling to handle `NO_DATA_FOUND` or other errors that may occur.
 
+
+**Program:**
+  ```
+  -- Create or replace the employees table (if not already exists)
+CREATE TABLE employees (
+  emp_id      NUMBER PRIMARY KEY,
+  emp_name    VARCHAR2(50),
+  designation VARCHAR2(50),
+  salary      NUMBER,
+  dept_no     NUMBER
+);
+
+-- Insert sample data
+INSERT INTO employees VALUES (1, 'Alice', 'Manager', 75000, 10);
+INSERT INTO employees VALUES (2, 'Bob', 'Developer', 55000, 20);
+INSERT INTO employees VALUES (3, 'Charlie', 'Analyst', 40000, 10);
+INSERT INTO employees VALUES (4, 'David', 'Tester', 42000, 30);
+COMMIT;
+
+
+-- PL/SQL block using cursor with FOR UPDATE and exception handling
+DECLARE
+  -- Cursor to select employees of a specific department for update
+  CURSOR emp_cursor (p_dept NUMBER) IS
+    SELECT emp_id, emp_name, salary
+    FROM employees
+    WHERE dept_no = p_dept
+    FOR UPDATE;  -- Locks the selected rows
+
+  -- Record variable to store each row
+  emp_record emp_cursor%ROWTYPE;
+
+  -- Variables
+  v_dept_no NUMBER := 10;     -- Department to update
+  v_count   NUMBER := 0;      -- Row counter
+  no_data   EXCEPTION;        -- Custom exception
+
+BEGIN
+  -- Open cursor
+  OPEN emp_cursor(v_dept_no);
+  LOOP
+    FETCH emp_cursor INTO emp_record;
+    EXIT WHEN emp_cursor%NOTFOUND;
+    v_count := v_count + 1;
+
+    -- Update salary for each fetched record
+    UPDATE employees
+    SET salary = salary + 5000
+    WHERE CURRENT OF emp_cursor;
+
+    DBMS_OUTPUT.PUT_LINE('Updated salary for ' || emp_record.emp_name ||
+                         ' (Emp_ID: ' || emp_record.emp_id || ')');
+  END LOOP;
+  CLOSE emp_cursor;
+
+  -- Raise exception if no rows were updated
+  IF v_count = 0 THEN
+    RAISE no_data;
+  END IF;
+
+  COMMIT;
+
+EXCEPTION
+  WHEN no_data THEN
+    DBMS_OUTPUT.PUT_LINE('No employees found in the specified department.');
+  WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('An unexpected error occurred: ' || SQLERRM);
+    ROLLBACK;
+END;
+/
+```
 **Output:**  
 The program should update employee salaries and display a message, or it should display an error message if no data is found.
 
----
+<img width="403" height="145" alt="image" src="https://github.com/user-attachments/assets/ca8f7a75-ee62-4880-8e68-2275e55dee07" />
+
 
 ## RESULT
 Thus, the program successfully executed and displayed employee details using a cursor. 
